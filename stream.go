@@ -1,6 +1,7 @@
 package stream
 
 import (
+	"encoding/hex"
 	"fmt"
 	"io"
 	"net"
@@ -134,6 +135,8 @@ func (es *EncryptedStream) Write(b []byte) (int, error) {
 			return bytesWrite, err
 		}
 
+		fmt.Println("[stream.go]:: Write -> plaintext: ", b[bytesWrite:bytesWrite+n])
+		fmt.Println("[stream.go]:: Write -> chipertext: ", hex.EncodeToString(es.encryptBuffer))
 		err = writeVarBytes(es.stream, es.encryptBuffer, es.writeLenBuffer)
 		if err != nil {
 			return bytesWrite, err
